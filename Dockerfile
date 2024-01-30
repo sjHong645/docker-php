@@ -9,6 +9,6 @@ RUN apt-get update && \
     docker-php-ext-install pdo_mysql mysqli
 
 # 온라인에 있는 파일 다운로드 
-RUN cur -sS https://getcomposer.org/installer|php && \
-    mv composer.phar/usr/local/bin/composer 
+RUN curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer 
 
