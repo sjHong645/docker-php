@@ -12,3 +12,14 @@ RUN apt-get update && \
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer 
 
+# WORKDIR를 통해 RUN, CMD, ENTRYPOINT에서 설정한 커맨드가 실행될 디렉토리를 설정함 
+# 즉, 여기서는 /app/src에서 커맨드들이 실행된다. 
+WORKDIR /app/src 
+
+COPY ./example-app .
+RUN composer install
+
+# 커맨드 명령어를 배열의 형식으로 입력했다. 
+# 즉, 이미지 내에서 php artisan server --host 0.0.0.0이라는 커맨드가 실행된다. 
+CMD ["php", "artisan", "serve", "--host", "0.0.0.0"]
+

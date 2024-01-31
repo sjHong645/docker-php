@@ -28,3 +28,15 @@ docker cp step1:/var/www/html/example-app .
 ```
 
 ## 프로젝트 틀을 이용해서 실행 환경 이미지 만들기 
+
+이번에는 Laravel이 실제로 움직이는 실행 환경의 이미지를 만든다. 
+
+이미지를 만들고 나면 아래의 명령어를 실행해서 브라우저에 접속할 수 있다.
+
+```
+# host의 포트번호 8000을 컨테이너 내부 포트번호 8000과 연결했다. 
+
+docker run -it --name step2 -p 8000:8000 docker_php:step2
+```
+
+이걸 실행하고 나면 `http://localhost:8000` 또는 `http://0.0.0.0:8000` 주소로 Laravel 프로젝트를 볼 수 있다. 
