@@ -16,10 +16,11 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 # 즉, 여기서는 /app/src에서 커맨드들이 실행된다. 
 WORKDIR /app/src 
 
-COPY ./example-app .
-RUN composer install
+# 1단계 Dockerfile의 COPY, CMD 커맨드 편집
+COPY ./example-app/compose.* ./
+RUN mkdir -p ./database/seeds && mkdir -p ./database/factories && composer install
 
-# 커맨드 명령어를 배열의 형식으로 입력했다. 
-# 즉, 이미지 내에서 php artisan server --host 0.0.0.0이라는 커맨드가 실행된다. 
-CMD ["php", "artisan", "serve", "--host", "0.0.0.0"]
+COPY ./example-app .
+
+CMD ["/app/src/entrypoint.sh"]
 
