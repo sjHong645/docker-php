@@ -17,7 +17,9 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 WORKDIR /app/src 
 
 # 1단계 Dockerfile의 COPY, CMD 커맨드 편집
-# composer 파일만 먼저 복사해서 composer install을 실행한 다음에 
+# 이 과정을 통해 composer install의 결과를 이미지에 별도로 캐시할 수 있다. 
+# composer.json, composer.lock 파일만 먼저 복사해서 라이브러리 설치를 함으로써 
+# 라이브러리의 조건이 바뀌지 않는 한 이미지 캐시를 계속 사용할 수 있는 상태가 된다. 
 COPY ./example-app/compose.* ./
 RUN mkdir -p ./database/seeds && mkdir -p ./database/factories && composer install
 
