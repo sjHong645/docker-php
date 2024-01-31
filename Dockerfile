@@ -17,10 +17,13 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 WORKDIR /app/src 
 
 # 1단계 Dockerfile의 COPY, CMD 커맨드 편집
+# composer 파일만 먼저 복사해서 composer install을 실행한 다음에 
 COPY ./example-app/compose.* ./
 RUN mkdir -p ./database/seeds && mkdir -p ./database/factories && composer install
 
+# 전체 디렉토리를 복사했다. 
 COPY ./example-app .
 
+# 실행하던 커맨드를 shell 스크립트 파일을 실행하도록 변경 
 CMD ["/app/src/entrypoint.sh"]
 
