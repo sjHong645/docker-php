@@ -97,3 +97,31 @@ php aritisan serve --host 0.0.0.0
 cf) 2,3단계에서 수정 및 추가할 파일들은 모두 컨테이너로 부터 로컬에 복사한 파일들을 얘기한다. 
 
 이렇게 모든 설정을 마치고 이미지를 빌드하고 다시 한 번 똑같이 빌드하면 cache가 적용된 걸 확인할 수 있다. 
+
+## 로컬 개발 환경 
+지금까지 만든 환경에서 개발을 진행한다.  
+여기서 `docker-compose`를 사용해서 로컬 개발환경을 만들기 위해 `docker-compose.yml`을 만들어야 한다. 
+
+``` yml
+version: '3'
+
+services: 
+  laravel: # laravael이라는 이름의 컨테이너 
+    image: docker_php:step4 # 이미지는 docker_php:step4 사용 
+    build: . # 이미지가 없으면 .(현재 디렉토리)를 기준으로 docker build를 수행해서 이미지를 만들고 이후의 동작 시작 
+    ports:
+      - "8000:8000" # host의 8000번 포트와 container의 8000번 포트를 연결
+    volumes:
+      - ./example-app:/app/src # 로컬 폴더와 컨테이너 폴더 마운트
+      - /app/src/vendor # 해당 디렉토리는 컨테이너에 있는 걸 사용
+```
+
+이후에 `docker-compose up` 커맨드를 사용한다. `docker_php:step4` 이미지가 없어서 build부터 시작한다. 
+build가 끝나면 컨테이너가 시작되고 이미지도 빌드되어 있는 걸 확인할 수 있다. 
+
+## 인증 도입 
+
+준비된 개발 환경에 간단한 `인증 기능`을 적용해보자. Laravel은 기본적으로 Breeze, Jetstream 두 가지 옵션을 제공한다.  
+여기서는 간단한 인증 기능을 갖는 Breeze를 사용하겠다. 
+
+1) 우선 `docker-compose.yml` 파일 편집 ⇒ 오타가 있어서 여기서 중단
